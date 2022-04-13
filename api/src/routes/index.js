@@ -3,7 +3,7 @@ const { Router } = require('express');
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require('axios');
 
-const { Country,Exercise, Countryexercise }= require('../db')
+const { Country, Exercise }= require('../db')
 
 const router = Router();
 
@@ -52,9 +52,7 @@ const getAllCountries = async ()=>{
     const todo = apiInfo.concat(dbInfo);
     return todo;
 }
-const gerAllExercises = async()=>{
-    return await Exercise.findAll();
-}
+
 
 /* GET /countries:
     En una primera instancia deberán traer todos los países desde restcountries y guardarlos en su propia base de datos y luego ya utilizarlos desde allí (Debe retonar sólo los datos necesarios para la ruta principal)
@@ -127,15 +125,19 @@ router.post('/activity', async ( req, res) => {
 
     country = filtro.dataValues.id
     //almaceno
-    await Exercise.create({
+   let activity = await Exercise.create({
         name,
         difficulty, 
         duration,
         season,
-        country
     });
+    let actividades = await Country.findAll({
+        where :{ id : country}
+    });
+    //console.log(actividades)
+    activity.addCountry(actividades)
     //pregutno por actividades
-     let actividades = await gerAllExercises();
+   /*  
 
      let filtroActividades = await actividades.filter(e=> e.country === country);
   
@@ -152,7 +154,7 @@ router.post('/activity', async ( req, res) => {
        
     })
      });
-      
+      */
     res.send('atividad creada')
 })
 

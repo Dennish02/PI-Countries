@@ -13,15 +13,13 @@ export function getCounttries(){
     }
    
 }
-export function getCountruByContienet(value){
-    return async function(dispatch){
-        var json= await axios("http://localhost:3001/countries");
-        const arr= json.data.filter(e => e.continent === value)
-        return dispatch({
-            type:'GET_CONTRIES_BY_CONTIENT',
-            payload: arr
-        })
-    }
+export function getCountruByContienet(payload){
+    
+        return {
+            type:'GET_CONTRIES_BY_CONTINENT',
+            payload
+        }
+    
 }
 export function orderByName(){
     return async function(dispatch){
@@ -30,6 +28,15 @@ export function orderByName(){
         return dispatch({
             type: 'ORDER_COUNTRIES_AZ_BY_NAME',
             payload: orden
+        })
+    }
+}
+export function getCounty(){
+    return async function (dispatch){
+        let json = await axios("http://localhost:3001/countries/:")
+        return dispatch({
+            type: 'VIEW_COUNTRY_INFO',
+            payload: json
         })
     }
 }

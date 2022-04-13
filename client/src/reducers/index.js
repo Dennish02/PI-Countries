@@ -1,6 +1,7 @@
 
 const initialSatate = {
     countries: [],
+    country:[],
 }
 
 
@@ -13,16 +14,25 @@ function rootReducer (state= initialSatate, action){
                 countries: action.payload
             }
 
-        case 'GET_CONTRIES_BY_CONTIENT':
+        case 'GET_CONTRIES_BY_CONTINENT':
+            const allCountries = state.countries
+            const statusFilter = action.payload === 'Todos'? allCountries :
+                                 allCountries.filter(e => e.continent === action.payload)
             return{
-                
+                ...state,
+                countries: statusFilter
             }
 
         case 'ORDER_COUNTRIES_AZ_BY_NAME':
+           
             return{
 
             }
-
+        case 'VIEW_COUNTRY_INFO':
+            return{
+                ...state,
+                country: action.payload
+            }
         default:
             return state;
     }
