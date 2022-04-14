@@ -7,6 +7,7 @@ import FilterBar from "./FilterBar";
 import Country from "./Country";
 import Paginas from './Paginas';
 
+
 export default function Countries(){
     const dispatch= useDispatch()
     const allCountries = useSelector((state)=> state.countries)

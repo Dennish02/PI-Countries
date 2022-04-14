@@ -21,9 +21,5 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    country:{
-      type: DataTypes.STRING,
-      allowNull: true,
-    }
   });
 };

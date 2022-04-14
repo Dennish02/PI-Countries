@@ -3,7 +3,7 @@ const { Router } = require('express');
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require('axios');
 
-const { Country, Exercise }= require('../db')
+const { Country, Exercise, Countryexercise }= require('../db')
 
 const router = Router();
 
@@ -52,7 +52,10 @@ const getAllCountries = async ()=>{
     const todo = apiInfo.concat(dbInfo);
     return todo;
 }
-
+const getExercise = async ()=>{
+    const allExercise = await Exercise.findAll()
+    return allExercise
+}
 
 /* GET /countries:
     En una primera instancia deberán traer todos los países desde restcountries y guardarlos en su propia base de datos y luego ya utilizarlos desde allí (Debe retonar sólo los datos necesarios para la ruta principal)
@@ -110,6 +113,21 @@ router.get('/countries/:idPais', async (req, res)=>{
     Si no existe ningún país mostrar un mensaje adecuado
 */
 
+
+//get activities
+router.get('/activities/:value', async (req, res)=>{
+    const { value } = req.params;
+    const getExercises = await Exercise.findAll();
+    const filterExercises = getExercises.filter( e=> e.name.toLowerCase() === value.toLowerCase())
+    const idExercise = filterExercises.forEach(e => e.id)
+    const relaciones = await Country.findAll();
+    //const machId = relaciones.forEach(e => e.id);
+    console.log(relaciones)
+    filterExercises.length!==0?
+    res.send('ok') :
+    res.status(404).send('no existe esa actividad')
+})
+
  /* POST /activity:
     Recibe los datos recolectados desde el formulario controlado de la ruta de creación de actividad turística por body
     Crea una actividad turística en la base de datos
@@ -117,13 +135,18 @@ router.get('/countries/:idPais', async (req, res)=>{
 router.post('/activity', async ( req, res) => {
     let { name, difficulty, duration, season, country } = req.body;
         //ARG
-    let hayAlgo = await getDbInfo();
-    if(!country) res.status(404).send('Hace falta el id')
-    let filtro = await hayAlgo.find(e=>e.id.toLowerCase() === country.toLowerCase());
+    /*let hayAlgo = await getDbInfo();
+    if(country.length===0) res.status(404).send('Hace falta el id')
+    const hayAlgoFiltro = hayAlgo.map(e=>e.id)
+    console.log(country);
+    let items = hayAlgo.filter(p => (
+        //Sí la longitud no es la misma son diferentes
+        p.length === country.length && p.every( item => country.includes(item) )
+    ));
 
-    //console.log(filtro.dataValues.id);
+    console.log(items);*/
 
-    country = filtro.dataValues.id
+    //country = filtro.dataValues.id
     //almaceno
    let activity = await Exercise.create({
         name,
@@ -132,9 +155,9 @@ router.post('/activity', async ( req, res) => {
         season,
     });
     let actividades = await Country.findAll({
-        where :{ id : country}
-    });
-    //console.log(actividades)
+            where :{ id : country}
+        })
+
     activity.addCountry(actividades)
     //pregutno por actividades
    /*  
