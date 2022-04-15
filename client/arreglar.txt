@@ -1,0 +1,4 @@
+
+al buscar por pais contorlar el error si el pais no eciste
+si pongo buscar por pais que no busque si el value es vacio
+al buscar por actividad valudar que no sea undefined

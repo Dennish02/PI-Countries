@@ -13,10 +13,19 @@ export function getCounttries(){
     }
    
 }
+export function getCountriesByName(value){
+    return async function(dispatch){
+        let json = await axios(`http://localhost:3001/countries?name=${value}`)
+        return dispatch({
+            type: 'GET_COUNTRY_BY_NAME',
+            payload: json.data
+        })
+    }
+}
 export function getActivities(value){
     return async function(dispatch){
         var json= await axios ("http://localhost:3001/activities/"+ value)
-       
+        
         try {
             return dispatch({
                 type: 'FILTER_BY_ACTIVITY',
@@ -41,6 +50,12 @@ export function orderByName(payload){
             payload
         }
     
+}
+export function orderByPopulation(payload){
+    return{
+        type: 'ORDER_COUNTRIES_BY_POPULATION',
+        payload
+    }
 }
 export function getCounty(id){
     return async function (dispatch){

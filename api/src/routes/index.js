@@ -117,15 +117,19 @@ router.get('/countries/:idPais', async (req, res)=>{
 //get activities
 router.get('/activities/:value', async (req, res)=>{
     const { value } = req.params;
-    const getExercises = await Exercise.findAll();
-    const filterExercises = getExercises.filter( e=> e.name.toLowerCase() === value.toLowerCase())
-    const idExercise = filterExercises.forEach(e => e.id)
-    const relaciones = await Country.findAll();
-    //const machId = relaciones.forEach(e => e.id);
-    console.log(relaciones)
-    filterExercises.length!==0?
-    res.send('ok') :
-    res.status(404).send('no existe esa actividad')
+    const getCountries = await getDbInfo();
+    
+    const filter = getCountries.filter(c =>{
+                  let countryAct = c.exercises.map(el => el.name.toLowerCase());
+                  return countryAct.includes(value.toLowerCase())? c: null
+            })
+     try {
+        res.send(filter) 
+     } catch (error) {
+         res.status(404).send(error)
+     }       
+    
+ 
 })
 
  /* POST /activity:

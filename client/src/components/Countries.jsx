@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import FilterBar from "./FilterBar";
 import Country from "./Country";
 import Paginas from './Paginas';
+import SearchBar from "./SearchBar";
 
 
 export default function Countries(){
@@ -29,6 +30,7 @@ export default function Countries(){
         <div>
             <Link to ='/activity'>Crear actividad</Link>
             <h1>Api Países</h1>
+            <SearchBar/>
             <FilterBar/>
             <div>
                 <p>botones</p>
@@ -42,9 +44,12 @@ export default function Countries(){
             {currentCountries?.map((e) => {
                 return (
                     <div key={e.id}>
+                       { e.name?
                         <Link to={"/countries/"+e.id}>
-                     <Country name={e.name} flag={e.flag} continent={e.continent}/>
-                    </Link>
+                            <Country name={e.name} flag={e.flag} continent={e.continent}/>
+                        </Link>: <Link to={"/activity"}>
+                             <Country flag={e.flag} continent={e.continent}/>
+                        </Link>}
                     </div> 
                 )
                     
