@@ -57,12 +57,20 @@ export function orderByPopulation(payload){
         payload
     }
 }
-export function getCounty(id){
+export function getCounty(idPais){
     return async function (dispatch){
-        let json = await axios("http://localhost:3001/countries/"+id)
+        let json = await axios(`http://localhost:3001/countries/${idPais}`)
+        console.log(json)
         return dispatch({
             type: 'VIEW_COUNTRY_INFO',
             payload: json
         })
+    }
+}
+export function exportExercise(payload){
+    return async function(dispatch){
+        const json = await axios.post("http://localhost:3001/activity", payload)
+        console.log(json)
+        return json;
     }
 }

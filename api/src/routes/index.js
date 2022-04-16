@@ -21,6 +21,7 @@ const  getApiInfo = async ()=>{
                 capital: s.capital && s.capital[0],
                 population: s.population,
                 flag: s.flags && s.flags[1],
+                area: s.area,
                 continent: s.continents && s.continents[0],  
         }
         
@@ -29,11 +30,7 @@ const  getApiInfo = async ()=>{
 
     return apiInfo;
 }
-const postDb = async ()=>{
-    const datos = await getApiInfo()
-   console.log(datos)
-    //Country.create(datos.forEach(e=>e))
-}
+
 const getDbInfo = async ()=> {
     return await Country.findAll({
         include:{
@@ -77,7 +74,8 @@ router.get('/countries',async (req,res)=>{
                 name: e.name, 
                 capital: e.capital ?  e.capital : 'No Capital',
                 population: e.population, 
-                flag: e.flag, 
+                flag: e.flag,
+                area: e.area, 
                 continent: e.continent }
             })
         });
@@ -102,7 +100,6 @@ router.get('/countries/:idPais', async (req, res)=>{
     let countriesAll = await getDbInfo();
     if(idPais){
         let countryInfo = await countriesAll.find( a => a.id.toLowerCase() === idPais.toLowerCase()) 
-        console.log(countryInfo);
         res.status(200).send(countryInfo) 
     }else{
         res.status(404).send('no hay ciudad con ese id')
@@ -152,6 +149,9 @@ router.post('/activity', async ( req, res) => {
 
     //country = filtro.dataValues.id
     //almaceno
+    const countries= await Country.findAll();
+    const find = countries?.filter(e => e.name.toLowerCase() === country.toLowerCase())
+    country = find.filter(e=>e.id)  
    let activity = await Exercise.create({
         name,
         difficulty, 

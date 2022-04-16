@@ -30,6 +30,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg'
     },
+    area:{
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
     createdInBd: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

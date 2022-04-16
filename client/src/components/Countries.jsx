@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import { getCounttries } from "../actions";
+import { getCounttries, getCounty } from "../actions";
 import {Link} from 'react-router-dom';
 import FilterBar from "./FilterBar";
 import Country from "./Country";
@@ -31,7 +31,7 @@ export default function Countries(){
             <Link to ='/activity'>Crear actividad</Link>
             <h1>Api Países</h1>
             <SearchBar/>
-            <FilterBar/>
+            <FilterBar setCurrentPage={setCurrentPage} />
             <div>
                 <p>botones</p>
                  <Paginas 
@@ -45,7 +45,7 @@ export default function Countries(){
                 return (
                     <div key={e.id}>
                        { e.name?
-                        <Link to={"/countries/"+e.id}>
+                        <Link onCLick={getCounty(e.id)} to={"/countries/"+e.id}>
                             <Country name={e.name} flag={e.flag} continent={e.continent}/>
                         </Link>: <Link to={"/activity"}>
                              <Country flag={e.flag} continent={e.continent}/>

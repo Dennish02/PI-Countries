@@ -2,6 +2,7 @@ import img from '../img/Ups2.jpg'
 const initialSatate = {
     countries: [],
     allCountries: [],
+    country:{}
 }
 
 
@@ -14,12 +15,13 @@ function rootReducer (state= initialSatate, action){
                 countries: action.payload,
                 allCountries: action.payload
             }
+            
         case 'GET_COUNTRY_BY_NAME':
-
             return {
                 ...state,
                 countries: action.payload
             }
+
         case 'GET_CONTRIES_BY_CONTINENT':
             let allCountries = state.allCountries
             const statusFilter = action.payload === 'Todos'? state.allCountries :
@@ -30,7 +32,11 @@ function rootReducer (state= initialSatate, action){
             }
 
         case 'ORDER_COUNTRIES_AZ_BY_NAME':
-            const statusOrder = action.payload === 'asc'? state.allCountries.sort(((a, b) => {
+            let todos = state.allCountries
+            let statusOrder 
+            if(action.payload === 'def')statusOrder=todos;
+        
+             statusOrder = action.payload === 'asc'? state.allCountries.sort(((a, b) => {
                                 if(a.name > b.name) {
                                     return 1;
                                 }
@@ -60,14 +66,13 @@ function rootReducer (state= initialSatate, action){
                 if(action.payload === 'asc') populationOrder = countriesTotal.sort(((a,b) => a.population - b.population));
                 if(action.payload === 'des') populationOrder = countriesTotal.reverse(((a, b) => a.population - b.population))
 
-                console.log(populationOrder)
-    
                 return{
                    ...state,
                    countries: populationOrder
                 }
 
         case 'VIEW_COUNTRY_INFO':
+            
             return{
                 ...state,
                 country: action.payload
@@ -81,6 +86,10 @@ function rootReducer (state= initialSatate, action){
             return {
                 ...state,
                 countries: hayOno
+            }
+        case 'POST_EXERCISE':
+            return{
+                ...state,
             }
         default:
             return state;

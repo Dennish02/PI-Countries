@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Country({  name, continent, flag}){
+export default function Country({ name, continent, flag}){
     return(
         <div>
             <h3>{name}</h3>
