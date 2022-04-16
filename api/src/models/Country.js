@@ -33,11 +33,6 @@ module.exports = (sequelize) => {
     area:{
       type: DataTypes.FLOAT,
       allowNull: true
-    },
-    createdInBd: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
     }
   });
 };

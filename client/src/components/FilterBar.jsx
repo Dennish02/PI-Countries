@@ -28,6 +28,7 @@ export default function FilterBar({setCurrentPage}){
         e.preventDefault();
         dispatch(getActivities(activity))
         setCurrentPage(1);
+        setActivity('')
     }
     
    function handleInputChange (e){
@@ -51,8 +52,8 @@ export default function FilterBar({setCurrentPage}){
         <div>
             <div>
            
-                <label>filtrar por contiente:</label>               
-                <select onChange={e=> handleFilterByContinent(e)} name="continent" id="continent" form="carform">
+                <label htmlFor="filtroContinente">filtrar por contiente:</label>               
+                <select  onChange={e=> handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
                     <option disabled selected="selected" >--Seleccionar--</option>
                     <option value="Todos">Todos</option>
                     <option value="South America">South America</option>
@@ -66,9 +67,9 @@ export default function FilterBar({setCurrentPage}){
                
             </div>
             <div>
-                <h1>{poblacion}</h1>
-                <label>Cantidad de Poblacion:</label>
-                <select onChange={e=> handleOrderByPopulation(e)}>
+               
+                <label htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
+                <select id="cantidadPoblacion" onChange={e=> handleOrderByPopulation(e)}>
                 <option disabled selected="selected" >--Seleccionar--</option>
                     <option value="def">Default</option>
                     <option value="asc">Ascendente</option>
@@ -76,8 +77,8 @@ export default function FilterBar({setCurrentPage}){
                 </select>    
             </div>
             <div>
-            <label>Orden Alfaético:</label>
-                <select value={orden} onChange={e=> handleOrderCountries(e)} >
+            <label htmlFor="ordenAlfabetico">Orden Alfaético:</label>
+                <select id="ordenAlfabetico" value={orden} onChange={e=> handleOrderCountries(e)} >
                    
                     <option selected="selected" value="def">Default</option>
                     <option value="asc">A-Z</option>
@@ -85,8 +86,8 @@ export default function FilterBar({setCurrentPage}){
                 </select>
             </div>
             <div>
-                <label>Por Actividad:</label>
-                   <form onSubmit={handleSubmit}>
+                <label htmlFor="actividad">Por Actividad:</label>
+                   <form  onSubmit={handleSubmit}>
                    <input value={activity} onChange={handleInputChange} placeholder="buscar actividad" type="text" />
                    <button type="submit">Buscar</button>
                    </form>

@@ -121,7 +121,7 @@ router.get('/activities/:value', async (req, res)=>{
                   return countryAct.includes(value.toLowerCase())? c: null
             })
      try {
-        res.send(filter) 
+        res.status(200).send(filter) 
      } catch (error) {
          res.status(404).send(error)
      }       
@@ -149,9 +149,6 @@ router.post('/activity', async ( req, res) => {
 
     //country = filtro.dataValues.id
     //almaceno
-    const countries= await Country.findAll();
-    const find = countries?.filter(e => e.name.toLowerCase() === country.toLowerCase())
-    country = find.filter(e=>e.id)  
    let activity = await Exercise.create({
         name,
         difficulty, 

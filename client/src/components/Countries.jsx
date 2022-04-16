@@ -33,7 +33,6 @@ export default function Countries(){
             <SearchBar/>
             <FilterBar setCurrentPage={setCurrentPage} />
             <div>
-                <p>botones</p>
                  <Paginas 
                      countriesByPage={countriesByPage}
                      allCountries={allCountries.length} 
@@ -45,7 +44,7 @@ export default function Countries(){
                 return (
                     <div key={e.id}>
                        { e.name?
-                        <Link onCLick={getCounty(e.id)} to={"/countries/"+e.id}>
+                        <Link to={"/countries/"+e.id}>
                             <Country name={e.name} flag={e.flag} continent={e.continent}/>
                         </Link>: <Link to={"/activity"}>
                              <Country flag={e.flag} continent={e.continent}/>
