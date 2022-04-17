@@ -2,7 +2,8 @@ import img from '../img/Ups2.jpg'
 const initialSatate = {
     countries: [],
     allCountries: [],
-    country:{}
+    country:{},
+    order: []
 }
 
 
@@ -10,6 +11,7 @@ const initialSatate = {
 function rootReducer (state= initialSatate, action){
     switch(action.type){
         case 'GET_COUNTRIES':
+           
             return {
                 ...state,
                 countries: action.payload,
@@ -17,9 +19,14 @@ function rootReducer (state= initialSatate, action){
             }
             
         case 'GET_COUNTRY_BY_NAME':
+            let countryName = action.payload
+            let noCountrie = [{name: '',
+                                 continent: 'Ningún país tiene ese nombre',
+                                 flag: img}]
+            let hayOsi = countryName.length !== 0 ? action.payload : noCountrie
             return {
                 ...state,
-                countries: action.payload
+                countries: hayOsi
             }
 
         case 'GET_CONTRIES_BY_CONTINENT':

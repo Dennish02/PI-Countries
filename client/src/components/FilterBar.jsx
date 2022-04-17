@@ -1,33 +1,29 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {getCountruByContienet, orderByName, getActivities, orderByPopulation } from "../actions";
+import {getCountruByContienet, orderByName, getActivities, orderByPopulation, getCounttries } from "../actions";
 
 //import {Link} from 'react-router-dom';
 
-export default function FilterBar({setCurrentPage}){
+export default function FilterBar(){
 
     const dispatch= useDispatch()
-    
-    
-
     const [activity, setActivity] = useState('')
-    const [poblacion, setPoblacion] = useState('')
-    const [orden, setOrden] = useState('')
+    const [ordenado, setOrdenado]= useState('')
 
-  
+    
 
     //filtrar por continente
     function handleFilterByContinent(e){
         e.preventDefault();
         dispatch(getCountruByContienet(e.target.value))
-        setCurrentPage(1);
+       
     }
    //buscar por actividad
     function handleSubmit(e){
         e.preventDefault();
         dispatch(getActivities(activity))
-        setCurrentPage(1);
+       
         setActivity('')
     }
     
@@ -38,15 +34,11 @@ export default function FilterBar({setCurrentPage}){
    //orden por nombre
    function handleOrderCountries(e){
     dispatch(orderByName(e.target.value))
-    setCurrentPage(1);
-    setOrden(`Ordenado ${e.target.value}`)
     }
     //orden por poblacion
     function handleOrderByPopulation(e){
         dispatch(orderByPopulation(e.target.value))
-        //setCurrentPage(1);
-        setPoblacion(`Ordenado por ${e.target.value}`)
-        console.log(e.target.value);
+        setOrdenado(`Ordenado por ${e.target.value}`)
     }
     return (
         <div>
@@ -67,7 +59,7 @@ export default function FilterBar({setCurrentPage}){
                
             </div>
             <div>
-               
+              
                 <label htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
                 <select id="cantidadPoblacion" onChange={e=> handleOrderByPopulation(e)}>
                 <option disabled selected="selected" >--Seleccionar--</option>
@@ -78,7 +70,7 @@ export default function FilterBar({setCurrentPage}){
             </div>
             <div>
             <label htmlFor="ordenAlfabetico">Orden Alfaético:</label>
-                <select id="ordenAlfabetico" value={orden} onChange={e=> handleOrderCountries(e)} >
+                <select id="ordenAlfabetico" onChange={e=> handleOrderCountries(e)} >
                    
                     <option selected="selected" value="def">Default</option>
                     <option value="asc">A-Z</option>

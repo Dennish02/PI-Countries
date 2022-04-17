@@ -1,27 +1,43 @@
 import React from "react";
 import { useState } from "react";
-import {useDispatch} from 'react-redux';
-import { getCountriesByName } from '../actions'
+import { useDispatch} from 'react-redux';
+import { getCountriesByName} from '../actions'
 
-export default function SearchBar(){
-    const dispatch= useDispatch()
+export default function SearchBar({handleKetUp, errores}) {
+    const dispatch = useDispatch()
     const [name, setName] = useState('')
-    function handleInputChange (e){
-        const { target } = e;
-        setName(target.value)
-       }
-    function handleSubmit(e){
-        e.preventDefault();
-        dispatch(getCountriesByName(name))
-        setName()
+    
+    function handleSubmit(e) {
+            e.preventDefault();
+            if(name && name.length > 1 && errores !== {}){
+                dispatch(getCountriesByName(name))
+                setName()
+            }else{
+                alert('completar el campo')
+                setName()
+            } 
+            
     }
-    return(
+    
+
+   
+    return (
         <div>
-              
-                <form onSubmit={handleSubmit}>
-                   <input value={name} onChange={handleInputChange} placeholder="Buscar Ciudad" type="text" />
-                   <button type="submit">Buscar</button>
-                </form>
+
+            <form onSubmit={handleSubmit}>
+                <input 
+                    onKeyUp={handleKetUp} 
+                    name="buscar" 
+                    value={name} 
+                    onChange={e=>setName(e.target.value)} 
+                    placeholder="Buscar Ciudad" 
+                    type="text" 
+                />
+                <button type="submit">Buscar</button>
+            </form>
+            {errores && (
+                        <p>{errores.error}</p>
+                    )}
         </div>
     )
 }
