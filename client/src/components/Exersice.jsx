@@ -65,14 +65,15 @@ export default function PostExercise() {
 
     //deleted
     function handleDelete (e){
-        e.preventDefault()
-        const id = e.target.innerText
+        
+        console.log(e)
+       // const id = e.target.innerText
         const citi = activity.country
        
 
         setActivity({
             ...activity,
-            country: citi.filter(e => e !== id)
+            country: citi.filter(el => el !== e)
         })
     }
     //clear
@@ -174,7 +175,12 @@ export default function PostExercise() {
                             <option key={e.name} value={e.name}>{e.name}</option>
                         ))}
                     </select>
-                    <ul><li  onClick={handleDelete} value={activity.name} > {activity.country.map(e =>(<p key={e}>{e}</p>))}</li></ul>
+                    {activity.country.map(el =>
+                        (<div key={el}>
+                            <p >{el}</p>
+                            <button onClick={()=>handleDelete(el)}>✖️</button>
+                            </div>
+                        ))}
                 </div>
                 <button type="submit">Crear</button>
             </form>
