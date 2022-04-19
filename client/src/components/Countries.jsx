@@ -8,7 +8,8 @@ import Country from "./Country";
 import Paginas from './Paginas';
 import SearchBar from "./SearchBar";
 import Errors from "./Errors";
-
+import Loading from "./Loading";
+import estilos from '../styles/Countries.module.css';
 
 export default function Countries() {
     const dispatch = useDispatch()
@@ -21,13 +22,14 @@ export default function Countries() {
     const [activity, setActivity] = useState('')
     const [ordenado, setOrdenado] = useState('')
     const [errores, setErrores] = useState({});
-    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/    
+    const [errors, setErrors] = useState({});
+    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/
 
     const paginas = (pageNumber) => {
 
-        if ( pageNumber !== 1 ) {
+        if (pageNumber !== 1) {
             setCountriesByPage(10)
-        }else{
+        } else {
             setCountriesByPage(9)
         }
         setCurrentPage(pageNumber)
@@ -35,13 +37,13 @@ export default function Countries() {
     useEffect(() => {
         dispatch(getCounttries());
     }, [dispatch])
-    
-    
-    function handleKetUp(e){
-        if(expresionesName.test(e.target.value)){
+
+
+    function handleKetUp(e) {
+        if (expresionesName.test(e.target.value)) {
             setErrores({})
-        }else{
-           setErrores({error : "Colocar mas de dos caracteres y solo letras y espacios"}) 
+        } else {
+            setErrores({ error: "Colocar mas de dos caracteres y solo letras y espacios" })
         }
     }
 
@@ -55,9 +57,14 @@ export default function Countries() {
     //buscar por actividad
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(getActivities(activity))
+        if (activity !== '') {
+            dispatch(getActivities(activity))
+            setCurrentPage(1)
+            setActivity('')
+        } else {
+            alert('Debes escribir una actividad')
+        }
 
-        setActivity('')
     }
 
     function handleInputChange(e) {
@@ -68,96 +75,138 @@ export default function Countries() {
     function handleOrderCountries(e) {
         dispatch(orderByName(e.target.value))
         setOrdenado(`Ordenado por ${e.target.value}`)
+        setCurrentPage(1)
     }
     //orden por poblacion
     function handleOrderByPopulation(e) {
+
         dispatch(orderByPopulation(e.target.value))
         setOrdenado(`Ordenado por ${e.target.value}`)
+        setCurrentPage(1)
+
+
+    }
+    //validad buscar actividad
+    function handleKeyUp(e) {
+        if (expresionesName.test(e.target.value)) {
+            setErrors({})
+        } else {
+            setErrors({ error: "Colocar mas de dos caracteres y solo letras y espacios" })
+        }
     }
 
-
     return (
-        <div>
-            <Link to='/activity'>Crear actividad</Link>
-            <h1>Api Países</h1>
-            <SearchBar
-                errores={errores}
-                handleKetUp={handleKetUp} 
-            />
-            <div>
+        <> {currentCountries.length ?
+
+            <section className={estilos.container}>
+                
+                <SearchBar
+                        errores={errores}
+                        handleKetUp={handleKetUp}
+                    />
+
+               
                 <div>
 
-                    <label htmlFor="filtroContinente">filtrar por contiente:</label>
-                    <select onChange={e => handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
-                        <option disabled selected="selected" >--Seleccionar--</option>
-                        <option value="Todos">Todos</option>
-                        <option value="South America">South America</option>
-                        <option value="North America">North America</option>
-                        <option value="Europe">Europe</option>
-                        <option value="Asia">Asia</option>
-                        <option value="Africa">Africa</option>
-                        <option value="Oceania">Oceania</option>
-                        <option value="Antarctica">Antarctica</option>
-                    </select>
-
-                </div>
-                <div>
-
-                    <label htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
-                    <select id="cantidadPoblacion" onChange={e => handleOrderByPopulation(e)}>
-                        <option disabled selected="selected" >--Seleccionar--</option>
-                        <option value="def">Default</option>
-                        <option value="asc">Ascendente</option>
-                        <option value="des">Descendete</option>
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="ordenAlfabetico">Orden Alfaético:</label>
-                    <select id="ordenAlfabetico" onChange={e => handleOrderCountries(e)} >
-
-                        <option disabled selected="selected" value="def">Default</option>
-                        <option value="asc">A-Z</option>
-                        <option value="des">Z-A</option>
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="actividad">Por Actividad:</label>
-                    <form onSubmit={handleSubmit}>
-                        <input value={activity} onChange={handleInputChange} placeholder="buscar actividad" type="text" />
-                        <button type="submit">Buscar</button>
-                    </form>
+                   
+                    <div className={estilos.contenedorTargetas}>
 
 
-                </div>
+                        <div >
+                            <div className={estilos.contenedorFiltros}>
+                                <div>
+
+                                    <label className={estilos.label} htmlFor="filtroContinente">Filtrar por contiente:</label>
+                                    <select onChange={e => handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
+                                        <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
+                                        <option className={estilos.option} value="Todos">Todos</option>
+                                        <option className={estilos.option} value="South America">South America</option>
+                                        <option className={estilos.option} value="North America">North America</option>
+                                        <option className={estilos.option} value="Europe">Europe</option>
+                                        <option className={estilos.option} value="Asia">Asia</option>
+                                        <option className={estilos.option} value="Africa">Africa</option>
+                                        <option className={estilos.option} value="Oceania">Oceania</option>
+                                        <option className={estilos.option} value="Antarctica">Antarctica</option>
+                                    </select>
+
+                                </div>
+                                <div>
+
+                                    <label className={estilos.label} htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
+                                    <select id="cantidadPoblacion" onChange={e => handleOrderByPopulation(e)}>
+                                        <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
+                                        <option className={estilos.option} value="asc">Ascendente</option>
+                                        <option className={estilos.option} value="des">Descendete</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className={estilos.label} htmlFor="ordenAlfabetico">Orden Alfaético:</label>
+                                    <select id="ordenAlfabetico" onChange={e => handleOrderCountries(e)} >
+                                        <option className={estilos.option} disabled selected="selected">--Seleccionar--</option>
+                                        <option className={estilos.option} value="asc">A-Z</option>
+                                        <option className={estilos.option} value="des">Z-A</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className={estilos.label} htmlFor="actividad">Por Actividad:</label>
+                                    <form onSubmit={handleSubmit}>
+                                        <input
+                                            className={estilos.formInput}
+                                            value={activity}
+                                            onChange={handleInputChange}
+                                            placeholder="Buscar actividad"
+                                            type="text"
+                                            onKeyUp={handleKeyUp}
+
+                                        />
+                                        <button className="button" type="submit">Buscar</button>
+                                    </form>
+                                    {errors && (
+                                        <p>{errors.error}</p>
+                                    )}
+
+                                </div>
 
 
-            </div>
-            <div>
-                <Paginas
-                    setCurrentPage={setCurrentPage}
-                    countriesByPage={countriesByPage}
-                    allCountries={allCountries.length}
-                    paginas={paginas} />
-            </div>
+                            </div>
+                        </div>
+                        <section className={estilos.section}>
+                            <div className={estilos.contenedorTargeta}>
+                            {currentCountries?.map((e) => {
+                                return (
+                                    <div className="targeta">
 
+                                        <div>
 
-            {currentCountries?.map((e) => {
-                return (
-                    <div key={e.id}>
-                       
-                        {
-                        e.name ? <Link to={"/countries/" + e.id}> <Country name={e.name} flag={e.flag} continent={e.continent} /></Link>
-                          : 
-                                <Errors name={e.name} flag={e.flag} continent={e.continent} />
+                                            {
+                                                e.error ? <Errors />
+                                                    : <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.continent} /> </Link>
+
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            })}          
+                            </div>
+                           
                             
-                           }
-            
+                            <div className={estilos.paginado}>
+                                <Paginas
+                                    setCurrentPage={setCurrentPage}
+                                    countriesByPage={countriesByPage}
+                                    allCountries={allCountries.length}
+                                    paginas={paginas} />
+                            </div>
+                            
+                        </section>
                     </div>
-                )
 
-            })
-            }
+                </div>
 
-        </div>
+
+            </section> : <Loading />
+        }
+        </>
     )
 }
+

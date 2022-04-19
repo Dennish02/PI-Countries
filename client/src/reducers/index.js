@@ -2,8 +2,9 @@ import img from '../img/Ups2.jpg'
 const initialSatate = {
     countries: [],
     allCountries: [],
-    country:{},
-    order: []
+    country:[],
+    order: [],
+    error:[]
 }
 
 
@@ -20,9 +21,8 @@ function rootReducer (state= initialSatate, action){
             
         case 'GET_COUNTRY_BY_NAME':
             let countryName = action.payload
-            let noCountrie = [{name: '',
-                                 continent: 'Ningún país tiene ese nombre',
-                                 flag: img}]
+            let noCountrie = [{error: 'Ningún país tiene ese nombre',
+                                 img: img}]
             let hayOsi = countryName.length !== 0 ? action.payload : noCountrie
             return {
                 ...state,
@@ -68,11 +68,10 @@ function rootReducer (state= initialSatate, action){
 
             case 'ORDER_COUNTRIES_BY_POPULATION':
                 let countriesTotal = state.allCountries;
-                let populationOrder
-                if(action.payload === 'def') populationOrder = state.allCountries;
-                if(action.payload === 'asc') populationOrder = countriesTotal.sort(((a,b) => a.population - b.population));
-                if(action.payload === 'des') populationOrder = countriesTotal.reverse(((a, b) => a.population - b.population))
+                let populationOrder = action.payload === 'asc'? countriesTotal.sort(((a,b) => a.population - b.population)):
+                countriesTotal.reverse(((a, b) => a.population - b.population))
 
+    
                 return{
                    ...state,
                    countries: populationOrder
@@ -86,9 +85,9 @@ function rootReducer (state= initialSatate, action){
             }
         case 'FILTER_BY_ACTIVITY':
             let countryFilter = action.payload
-            let mensajeError = [{name: '',
-                                 continent: 'Ningún país tiene esa actividad, ¿Desea Crearla?',
-                                 flag: img}]
+            let mensajeError = [{id:1,
+                                 error: 'Ningún país tiene esa actividad, ¿Desea Crearla?',
+                                 img: img}]
             let hayOno = countryFilter.length !== 0 ? action.payload : mensajeError
             return {
                 ...state,

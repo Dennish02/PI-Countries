@@ -1,4 +1,5 @@
 import './App.css';
+import './normalize.css'
 import { useState } from "react";
 import { BrowserRouter, Route, Routes} from "react-router-dom";
 import Countries from './components/Countries';

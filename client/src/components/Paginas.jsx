@@ -14,7 +14,13 @@ export default function Paginado ({countriesByPage, allCountries, paginas}){
                 {pageNumber &&
                 pageNumber.map(number =>(
                     <li key={number}>
-                        <a onClick={() => paginas(number)}>{number}</a>
+                        {
+                            number<=25?
+                            <button className="buttonSecundario" onClick={() => paginas(number)}>{number}</button>
+                        : null
+                        }
+
+                          
                     </li>
                 ))}
             </ul>   

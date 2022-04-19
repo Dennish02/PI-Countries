@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {getCountruByContienet, orderByName, getActivities, orderByPopulation, getCounttries } from "../actions";
-
+import estilos from'../styles/FilterBarra.modules.css';
 //import {Link} from 'react-router-dom';
 
 export default function FilterBar(){
@@ -41,10 +41,10 @@ export default function FilterBar(){
         setOrdenado(`Ordenado por ${e.target.value}`)
     }
     return (
-        <div>
+        <div className={estilos.contenedorFiltro}>
             <div>
            
-                <label htmlFor="filtroContinente">filtrar por contiente:</label>               
+                <label className={estilos.label} htmlFor="filtroContinente">filtrar por contiente:</label>               
                 <select  onChange={e=> handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
                     <option disabled selected="selected" >--Seleccionar--</option>
                     <option value="Todos">Todos</option>
@@ -60,7 +60,7 @@ export default function FilterBar(){
             </div>
             <div>
               
-                <label htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
+                <label className={estilos.label} htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
                 <select id="cantidadPoblacion" onChange={e=> handleOrderByPopulation(e)}>
                 <option disabled selected="selected" >--Seleccionar--</option>
                     <option value="def">Default</option>
@@ -69,7 +69,7 @@ export default function FilterBar(){
                 </select>    
             </div>
             <div>
-            <label htmlFor="ordenAlfabetico">Orden Alfaético:</label>
+            <label className={estilos.label} htmlFor="ordenAlfabetico">Orden Alfaético:</label>
                 <select id="ordenAlfabetico" onChange={e=> handleOrderCountries(e)} >
                    
                     <option selected="selected" value="def">Default</option>
@@ -78,7 +78,7 @@ export default function FilterBar(){
                 </select>
             </div>
             <div>
-                <label htmlFor="actividad">Por Actividad:</label>
+                <label className={estilos.label} htmlFor="actividad">Por Actividad:</label>
                    <form  onSubmit={handleSubmit}>
                    <input value={activity} onChange={handleInputChange} placeholder="buscar actividad" type="text" />
                    <button type="submit">Buscar</button>

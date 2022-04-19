@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React, {  useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { getCounttries } from "../actions";
 
 
 
-export default function Errors({ name, continent, flag}){
-    const [ eeror1, setError1] = useState({})
+export default function Errors(){
+    
+    const dispatch=useDispatch()
+    const errorTrue = useSelector((state)=> state.countries)
 
-    if(name===''){
-        setError1({
-            ...eeror1,
-            continent: continent,
-            flag: flag,
-        })
-    }
+
+     function handleMount(){
+       
+        dispatch(getCounttries())
+        
+     }   
+
+
 
     return(
         <div>
-           <p>{eeror1.continent}</p> 
-           <p>{eeror1.flag}</p>
+            <button onClick={handleMount}>Volver a cargar</button>
+            {errorTrue?.map((e) =>{
+                return(
+                   <div key={e.id}>
+                    <p>{e.error}</p>
+                    <img src={e.img} alt="No pais" />    
+                    
+                    </div>
+                )
+
+
+            })
+            }
         </div>
     );
 }

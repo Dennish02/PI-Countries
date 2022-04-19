@@ -1,0 +1,30 @@
+.contenedor{
+    position: relative;
+    border: solid 1px #444444;
+    border-radius: 0.5rem;
+}
+.contenedor:hover{
+    cursor: pointer;
+    transform: scale(1.03);
+}
+.contenedorContenido{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:  #262a2df8;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+h3{
+    color:#6CC7DF;
+    font-size: 2rem;
+    font-family:  'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+.img{
+    width: 100%;
+    border-radius: 0.5rem;
+}
