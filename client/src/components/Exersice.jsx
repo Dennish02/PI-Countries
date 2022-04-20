@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { exportExercise, getCounttries } from "../actions";
 import { Link } from 'react-router-dom';
-
+import estilos from '../styles/Exercise.module.css'
 
 export default function PostExercise() {
     const dispatch = useDispatch()
@@ -106,8 +106,8 @@ export default function PostExercise() {
 
     return (
         <div>
-            <Link to='/countries'><button>Ir a Inicio</button></Link>
-            <h1>Crear actividad</h1>
+            <Link to='/countries'><button className="button">Ir a Inicio</button></Link>
+            <h2>Crear actividad</h2>
             <form onSubmit={e => handleSubmit(e)}>
 
                 <div>

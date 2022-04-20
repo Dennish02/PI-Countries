@@ -23,6 +23,8 @@ const getApiInfo = async () => {
             flag: s.flags && s.flags[1],
             area: s.area,
             continent: s.continents && s.continents[0],
+            region: s.region,
+            subregion: s.subregion,
         }
 
 
@@ -76,7 +78,9 @@ router.get('/countries', async (req, res) => {
                     population: e.population,
                     flag: e.flag,
                     area: e.area,
-                    continent: e.continent
+                    continent: e.continent,
+                    region: e.region ? e.region : 'No Region',
+                    subregion: e.subregion  ? e.subregion : 'No Region',
                 }
             })
         });

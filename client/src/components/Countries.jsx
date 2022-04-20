@@ -23,16 +23,18 @@ export default function Countries() {
     const [ordenado, setOrdenado] = useState('')
     const [errores, setErrores] = useState({});
     const [errors, setErrors] = useState({});
-    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/
+    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/;
 
-    const paginas = (pageNumber) => {
-
-        if (pageNumber !== 1) {
-            setCountriesByPage(10)
-        } else {
-            setCountriesByPage(9)
-        }
+   const paginas = (pageNumber)=>{
         setCurrentPage(pageNumber)
+        if(pageNumber >= 2){
+            setCountriesByPage(10)
+            console.log('no')
+        }
+        else{
+            setCountriesByPage(9)
+            console.log('si')
+        }
     }
     useEffect(() => {
         dispatch(getCounttries());
@@ -50,9 +52,10 @@ export default function Countries() {
 
     //filtrar por continente
     function handleFilterByContinent(e) {
-        e.preventDefault();
+        
         dispatch(getCountruByContienet(e.target.value))
-
+        paginas(1)
+        setOrdenado('')
     }
     //buscar por actividad
     function handleSubmit(e) {
@@ -75,15 +78,14 @@ export default function Countries() {
     function handleOrderCountries(e) {
         dispatch(orderByName(e.target.value))
         setOrdenado(`Ordenado por ${e.target.value}`)
-        setCurrentPage(1)
+        paginas(1)
     }
     //orden por poblacion
     function handleOrderByPopulation(e) {
 
         dispatch(orderByPopulation(e.target.value))
         setOrdenado(`Ordenado por ${e.target.value}`)
-        setCurrentPage(1)
-
+        paginas(1)
 
     }
     //validad buscar actividad
@@ -96,7 +98,7 @@ export default function Countries() {
     }
 
     return (
-        <> {currentCountries.length ?
+        <>
 
             <section className={estilos.container}>
                 
@@ -120,13 +122,12 @@ export default function Countries() {
                                     <select onChange={e => handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
                                         <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
                                         <option className={estilos.option} value="Todos">Todos</option>
-                                        <option className={estilos.option} value="South America">South America</option>
-                                        <option className={estilos.option} value="North America">North America</option>
+                                        <option className={estilos.option} value="Americas">Americas</option>
                                         <option className={estilos.option} value="Europe">Europe</option>
                                         <option className={estilos.option} value="Asia">Asia</option>
                                         <option className={estilos.option} value="Africa">Africa</option>
                                         <option className={estilos.option} value="Oceania">Oceania</option>
-                                        <option className={estilos.option} value="Antarctica">Antarctica</option>
+                                        <option className={estilos.option} value="Antarctic">Antarctica</option>
                                     </select>
 
                                 </div>
@@ -135,21 +136,21 @@ export default function Countries() {
                                     <label className={estilos.label} htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
                                     <select id="cantidadPoblacion" onChange={e => handleOrderByPopulation(e)}>
                                         <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
-                                        <option className={estilos.option} value="asc">Ascendente</option>
-                                        <option className={estilos.option} value="des">Descendete</option>
+                                        <option className={estilos.option} value="Ascendentesc">Ascendente</option>
+                                        <option className={estilos.option} value="Descendete">Descendete</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label className={estilos.label} htmlFor="ordenAlfabetico">Orden Alfaético:</label>
                                     <select id="ordenAlfabetico" onChange={e => handleOrderCountries(e)} >
                                         <option className={estilos.option} disabled selected="selected">--Seleccionar--</option>
-                                        <option className={estilos.option} value="asc">A-Z</option>
-                                        <option className={estilos.option} value="des">Z-A</option>
+                                        <option className={estilos.option} value="AZ">A-Z</option>
+                                        <option className={estilos.option} value="ZA">Z-A</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div className={estilos.relativo}>
                                     <label className={estilos.label} htmlFor="actividad">Por Actividad:</label>
-                                    <form onSubmit={handleSubmit}>
+                                    <form   onSubmit={handleSubmit}>
                                         <input
                                             className={estilos.formInput}
                                             value={activity}
@@ -161,9 +162,11 @@ export default function Countries() {
                                         />
                                         <button className="button" type="submit">Buscar</button>
                                     </form>
-                                    {errors && (
-                                        <p>{errors.error}</p>
-                                    )}
+                                    <small className={estilos.error}>
+                                        {errors && (
+                                           <>{errors.error}</>
+                                        )}
+                                    </small>
 
                                 </div>
 
@@ -171,16 +174,18 @@ export default function Countries() {
                             </div>
                         </div>
                         <section className={estilos.section}>
+                        <h2>{ordenado}</h2>
                             <div className={estilos.contenedorTargeta}>
+                                
                             {currentCountries?.map((e) => {
                                 return (
-                                    <div className="targeta">
+                                    <div key={e.id} className="targeta">
 
-                                        <div>
+                                        <div >
 
                                             {
                                                 e.error ? <Errors />
-                                                    : <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.continent} /> </Link>
+                                                    : <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /> </Link>
 
                                             }
                                         </div>
@@ -192,7 +197,7 @@ export default function Countries() {
                             
                             <div className={estilos.paginado}>
                                 <Paginas
-                                    setCurrentPage={setCurrentPage}
+                                    
                                     countriesByPage={countriesByPage}
                                     allCountries={allCountries.length}
                                     paginas={paginas} />
@@ -204,8 +209,8 @@ export default function Countries() {
                 </div>
 
 
-            </section> : <Loading />
-        }
+            </section> 
+        
         </>
     )
 }

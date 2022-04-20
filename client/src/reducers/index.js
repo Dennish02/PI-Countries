@@ -2,6 +2,7 @@ import img from '../img/Ups2.jpg'
 const initialSatate = {
     countries: [],
     allCountries: [],
+    paracontinente:[],
     country:[],
     order: [],
     error:[]
@@ -16,7 +17,8 @@ function rootReducer (state= initialSatate, action){
             return {
                 ...state,
                 countries: action.payload,
-                allCountries: action.payload
+                allCountries: action.payload,
+                paracontinente: action.payload,
             }
             
         case 'GET_COUNTRY_BY_NAME':
@@ -30,20 +32,19 @@ function rootReducer (state= initialSatate, action){
             }
 
         case 'GET_CONTRIES_BY_CONTINENT':
-            let allCountries = state.allCountries
-            const statusFilter = action.payload === 'Todos'? state.allCountries :
-                                 allCountries.filter(e => e.continent === action.payload)
+            //let LoCountries = state.allCountries
+            const statusFilter = action.payload === 'Todos' && state.allCountries 
+              let yaWey=   statusFilter? statusFilter :
+                            state.allCountries.filter(e => e.region === action.payload)             
             return{
                 ...state,
-                countries: statusFilter
+                countries: yaWey
             }
 
         case 'ORDER_COUNTRIES_AZ_BY_NAME':
-            let todos = state.allCountries
-            let statusOrder 
-            if(action.payload === 'def')statusOrder=todos;
-        
-             statusOrder = action.payload === 'asc'? state.allCountries.sort(((a, b) => {
+            //let todos = state.allCountries
+              
+            let statusOrder  = action.payload === 'AZ'? state.allCountries.sort(((a, b) => {
                                 if(a.name > b.name) {
                                     return 1;
                                 }
@@ -52,7 +53,7 @@ function rootReducer (state= initialSatate, action){
                                 }
                                 return 0;
                                 })):
-                                state.countries.sort(((a, b) => {
+                                state.allCountries.sort(((a, b) => {
                                 if(a.name > b.name) {
                                     return -1;
                                 }
@@ -68,7 +69,7 @@ function rootReducer (state= initialSatate, action){
 
             case 'ORDER_COUNTRIES_BY_POPULATION':
                 let countriesTotal = state.allCountries;
-                let populationOrder = action.payload === 'asc'? countriesTotal.sort(((a,b) => a.population - b.population)):
+                let populationOrder = action.payload === 'Ascendente'? countriesTotal.sort(((a,b) => a.population - b.population)):
                 countriesTotal.reverse(((a, b) => a.population - b.population))
 
     

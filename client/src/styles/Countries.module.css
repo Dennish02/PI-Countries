@@ -65,6 +65,20 @@ select{
     border-radius: 0.5rem;
     background-color: #262A2D;
     color: #8CBD2C;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
     text-align: center;
+}
+
+.relativo{
+    position: relative;
+}
+.error{
+    width: 100%;
+    margin: 0 auto;
+    color: #C4272D;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
 }
