@@ -1,0 +1,79 @@
+.contenedor{
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+.formulario{
+    max-width: 400px;
+    margin: 2rem auto;
+    border: solid 1px #444444;
+    border-radius: 0.5rem;
+}
+.select{
+    font-family:  'Roboto', sans-serif;
+    width: 70%;
+    display: block;
+    margin: 1rem auto;
+    padding: 1rem 0;
+    text-align: center;
+    background:  #262A2D;
+    border: solid 1px #444444;
+    color: #8CBD2C;
+    border-radius: 0.5rem;
+}
+
+.input{
+    display: block;
+    margin: 1rem auto;
+    padding: 1rem;
+    color: #8CBD2C;
+    background-color: #262A2D;
+    border: solid 1px #444444;
+    border-radius: 0.5rem;
+    width: 70%;
+    text-align: center;
+ }
+label{
+    color: #b1b1b1;
+}
+option:hover{
+    color: #444444;
+    cursor: pointer;
+}
+.pais{
+    display: grid;
+    grid-template-columns: repeat(1,1fr 0.3fr);
+    align-items: center;
+    align-content: center;
+    margin: 1rem auto;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+}
+.pais:hover{
+    background-color: #C4272D;
+    cursor: pointer;
+}
+.button{
+    background: none;
+    border: solid 1px #444444;
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+    margin: 0 0.3rem;
+}
+.button:hover{
+    cursor: pointer;
+    background-color: #C4272D;
+}
+@media(min-width: 768px){
+    .paises{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+
+/*@media (min-width: 768px ){
+    .formulario{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr)
+    }
+}*/

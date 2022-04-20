@@ -21,9 +21,11 @@ export default function Countries() {
     const currentCountries = allCountries.slice(indexOfFirstCountry, indexOfLastCountrie);
     const [activity, setActivity] = useState('')
     const [ordenado, setOrdenado] = useState('')
-    const [errores, setErrores] = useState({});
     const [errors, setErrors] = useState({});
+    const [errorserarch, setErrorsearch] = useState({});
     const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/;
+    
+
 
    const paginas = (pageNumber)=>{
         setCurrentPage(pageNumber)
@@ -41,14 +43,7 @@ export default function Countries() {
     }, [dispatch])
 
 
-    function handleKetUp(e) {
-        if (expresionesName.test(e.target.value)) {
-            setErrores({})
-        } else {
-            setErrores({ error: "Colocar mas de dos caracteres y solo letras y espacios" })
-        }
-    }
-
+    
 
     //filtrar por continente
     function handleFilterByContinent(e) {
@@ -89,13 +84,17 @@ export default function Countries() {
 
     }
     //validad buscar actividad
+    //manejo de errores del input
     function handleKeyUp(e) {
-        if (expresionesName.test(e.target.value)) {
-            setErrors({})
-        } else {
-            setErrors({ error: "Colocar mas de dos caracteres y solo letras y espacios" })
-        }
+        expresionesName.test(e.target.value)? setErrors({}):
+        setErrors({ error: "Colocar mas de dos caracteres y solo letras y espacios" })  
     }
+   
+    function handleReset(e){
+        e.target.value === ''? setErrors({}):
+        setErrors({error: 'Este campo tiene uno o mas errores'})    
+     }
+   
 
     return (
         <>
@@ -103,9 +102,10 @@ export default function Countries() {
             <section className={estilos.container}>
                 
                 <SearchBar
-                        errores={errores}
-                        handleKetUp={handleKetUp}
-                    />
+                    errors={errorserarch}
+                    handleKeyUp={handleKeyUp} 
+                    handleReset={handleReset}
+                />
 
                
                 <div>
@@ -119,7 +119,7 @@ export default function Countries() {
                                 <div>
 
                                     <label className={estilos.label} htmlFor="filtroContinente">Filtrar por contiente:</label>
-                                    <select onChange={e => handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
+                                    <select className={estilos.select} onChange={e => handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
                                         <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
                                         <option className={estilos.option} value="Todos">Todos</option>
                                         <option className={estilos.option} value="Americas">Americas</option>
@@ -134,7 +134,7 @@ export default function Countries() {
                                 <div>
 
                                     <label className={estilos.label} htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
-                                    <select id="cantidadPoblacion" onChange={e => handleOrderByPopulation(e)}>
+                                    <select className={estilos.select} id="cantidadPoblacion" onChange={e => handleOrderByPopulation(e)}>
                                         <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
                                         <option className={estilos.option} value="Ascendentesc">Ascendente</option>
                                         <option className={estilos.option} value="Descendete">Descendete</option>
@@ -142,7 +142,7 @@ export default function Countries() {
                                 </div>
                                 <div>
                                     <label className={estilos.label} htmlFor="ordenAlfabetico">Orden Alfaético:</label>
-                                    <select id="ordenAlfabetico" onChange={e => handleOrderCountries(e)} >
+                                    <select className={estilos.select} id="ordenAlfabetico" onChange={e => handleOrderCountries(e)} >
                                         <option className={estilos.option} disabled selected="selected">--Seleccionar--</option>
                                         <option className={estilos.option} value="AZ">A-Z</option>
                                         <option className={estilos.option} value="ZA">Z-A</option>
@@ -156,7 +156,9 @@ export default function Countries() {
                                             value={activity}
                                             onChange={handleInputChange}
                                             placeholder="Buscar actividad"
+                                            name="otro"
                                             type="text"
+                                            onBlur={handleReset}
                                             onKeyUp={handleKeyUp}
 
                                         />

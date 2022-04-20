@@ -2,17 +2,32 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch} from 'react-redux';
 import { getCountriesByName} from '../actions'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import '../styles/searchbar.css'
-export default function SearchBar({handleKetUp, errores}) {
+export default function SearchBar() {
     const dispatch = useDispatch()
     const [name, setName] = useState('')
-    
+    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/;
+    const [errores, setErrores] = useState({});
+     //const {errors, handleKeyUp, handleReset} = useParams()
+  
+
+     function handleKeyUp(e) {
+        expresionesName.test(e.target.value)? setErrores({}):
+         setErrores({ error: "Colocar mas de dos caracteres y solo letras y espacios" }) 
+    }
+   
+    function handleReset(e){
+        e.target.value === '' && setErrores({})   
+     }
+   
+
     function handleSubmit(e) {
             e.preventDefault();
             if(name && name.length > 1 && errores !== {}){
                 dispatch(getCountriesByName(name))
                 setName('')
+                
             }else{
                 alert('completar el campo')
                 setName('')
@@ -36,9 +51,10 @@ export default function SearchBar({handleKetUp, errores}) {
             <form className="form" onSubmit={handleSubmit}>
                 <input 
                     className="form__input"
-                    onKeyUp={handleKetUp} 
+                    onKeyUp={handleKeyUp} 
                     name="buscar" 
-                    value={name} 
+                    value={name}
+                    onBlur={handleReset}
                     onChange={e=>setName(e.target.value)} 
                     placeholder="Buscar País" 
                     type="text" 

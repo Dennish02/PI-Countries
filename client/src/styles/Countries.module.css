@@ -40,7 +40,7 @@
     display: block;
     margin-bottom: 1rem;
 }
-select{
+.select{
     font-family:  'Roboto', sans-serif;
     width: 90%;
     display: block;

@@ -89,7 +89,6 @@ export default function PostExercise() {
         ) {
             setErrors(false)
             dispatch(exportExercise(activity))
-            alert('Actividad Creada')
             setActivity({
                 name: "",
                 difficulty: "",
@@ -97,6 +96,8 @@ export default function PostExercise() {
                 season: "",
                 country: []
             })
+            alert('Actividad Creada')
+            
         } else {
             setErrors(true)
         }
@@ -105,17 +106,18 @@ export default function PostExercise() {
 
 
     return (
-        <div>
+        <div className={estilos.contenedor}>
             <Link to='/countries'><button className="button">Ir a Inicio</button></Link>
             <h2>Crear actividad</h2>
             <form onSubmit={e => handleSubmit(e)}>
-
+            <div className={estilos.formulario}>
                 <div>
                     {errores && (
                         <p>{errores.error}</p>
                     )}
                     <label htmlFor="nombre">Nombre:</label>
                     <input
+                        className={estilos.input}
                         id="nombre"
                         value={name}
                         name='name'
@@ -131,7 +133,8 @@ export default function PostExercise() {
                 </div>
                 <div>
                     <label htmlFor="duracion">Duración:</label>
-                    <select 
+                    <select
+                        className={estilos.select} 
                         id="duracion" 
                         value={activity.difficulty} 
                         name="difficulty" 
@@ -147,6 +150,7 @@ export default function PostExercise() {
                 <div>
                     <label htmlFor="duracion">Duración:</label>
                     <input
+                        className={estilos.select}
                         id="duracion"
                         value={duration}
                         name='duration'
@@ -159,7 +163,7 @@ export default function PostExercise() {
                 </div>
                 <div>
                     <label htmlFor="temporada">Temporada:</label>
-                    <select id="temporada" onChange={handleSelectSeason} required>
+                    <select className={estilos.select} id="temporada" onChange={handleSelectSeason} required>
                         <option selected="selected" disabled>--Seleccionar--</option>
                         <option value="Verano">Verano</option>
                         <option value="Otoño">Otoño</option>
@@ -169,20 +173,24 @@ export default function PostExercise() {
                 </div>
                 <div>
                     <label htmlFor="seleccionar">Seleccionar País:</label>
-                    <select id="seleccionar" onChange={handleSelect} required>
+                    <select className={estilos.select} id="seleccionar" onChange={handleSelect} required>
                         <option selected="selected" disabled>--Seleccionar--</option>
                         {countries.map(e => (
                             <option key={e.name} value={e.name}>{e.name}</option>
                         ))}
                     </select>
+                    <div className={estilos.paises}>
                     {activity.country.map(el =>
-                        (<div key={el}>
+                        (<div className={estilos.pais} key={el}>
                             <p >{el}</p>
-                            <button onClick={()=>handleDelete(el)}>✖️</button>
+                            <button className={estilos.button}onClick={()=>handleDelete(el)}>✖️</button>
                             </div>
                         ))}
+                    </div>
+                  
                 </div>
-                <button type="submit">Crear</button>
+                </div>
+                <button className="button" type="submit">Crear</button>
             </form>
             {errors && (
                 <p>Todos los campos son obligatorios</p>
