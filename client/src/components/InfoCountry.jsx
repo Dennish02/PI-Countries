@@ -13,7 +13,7 @@ export default function InfoCountry(){
 
     useEffect(()=>{
         dispatch(getCounty(id))
-    }, [])
+    }, [dispatch, id])
   
      return (
          <div className={estilos.contenedor}>
@@ -22,7 +22,7 @@ export default function InfoCountry(){
                  country.data ?
                      <div className={estilos.contenedorContenido}>
                          <div className={estilos.contenedorInfo}>
-                         <img className={estilos.img} src={country.data.flag} />
+                         <img className={estilos.img} src={country.data.flag} alt={`Bandera ${country.data.name}`}/>
                          <div className={estilos.texto}>
                              <h2>{country.data.name}</h2>
                              <p><span>Continente:</span>{` ${country.data.region}`}</p>

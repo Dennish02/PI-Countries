@@ -33,18 +33,16 @@ function rootReducer (state= initialSatate, action){
 
         case 'GET_CONTRIES_BY_CONTINENT':
             //let LoCountries = state.allCountries
-            const statusFilter = action.payload === 'Todos' && state.allCountries 
-              let yaWey=   statusFilter? statusFilter :
-                            state.allCountries.filter(e => e.region === action.payload)             
+            const statusFilter =  state.allCountries.filter(e => e.region === action.payload)             
             return{
                 ...state,
-                countries: yaWey
+                countries: statusFilter
             }
 
         case 'ORDER_COUNTRIES_AZ_BY_NAME':
             //let todos = state.allCountries
               
-            let statusOrder  = action.payload === 'AZ'? state.allCountries.sort(((a, b) => {
+            let statusOrder  = action.payload === 'AZ'? state.countries.sort(((a, b) => {
                                 if(a.name > b.name) {
                                     return 1;
                                 }
@@ -53,7 +51,7 @@ function rootReducer (state= initialSatate, action){
                                 }
                                 return 0;
                                 })):
-                                state.allCountries.sort(((a, b) => {
+                                state.countries.sort(((a, b) => {
                                 if(a.name > b.name) {
                                     return -1;
                                 }
@@ -68,9 +66,9 @@ function rootReducer (state= initialSatate, action){
             }
 
             case 'ORDER_COUNTRIES_BY_POPULATION':
-                let countriesTotal = state.allCountries;
+                let countriesTotal = state.countries;
                 let populationOrder = action.payload === 'Ascendente'? countriesTotal.sort(((a,b) => a.population - b.population)):
-                countriesTotal.reverse(((a, b) => a.population - b.population))
+                countriesTotal.sort(((a, b) => b.population - a.population))
 
     
                 return{

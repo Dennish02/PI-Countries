@@ -70,7 +70,9 @@ option:hover{
         grid-template-columns: repeat(3,1fr);
     }
 }
-
+.error{
+    color: #C4272D;
+}
 /*@media (min-width: 768px ){
     .formulario{
         display: grid;

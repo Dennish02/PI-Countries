@@ -7,7 +7,7 @@ import estilos from '../styles/Exercise.module.css'
 
 export default function PostExercise() {
     const dispatch = useDispatch()
-    const countries = useSelector((state) => state.countries)//para seleccionaar el id
+    const countries = useSelector((state) => state.allCountries)//para seleccionaar el id
     const [errors, setErrors] = useState(false);  
     const [activity, setActivity] = useState({
         name: "",
@@ -24,7 +24,7 @@ export default function PostExercise() {
 
     useEffect(() => {
         dispatch(getCounttries());
-    }, [])
+    }, [dispatch])
    
     function handleKetUp(e){
       if(expresionesName.test(e.target.value)){
@@ -35,6 +35,8 @@ export default function PostExercise() {
   }
     
     function handleBlur(e) {
+        e.target.value === ''? setErrores({}):
+        setErrores({error: 'Este campo tiene uno o mas errores'})  
         //añadir name y duration
         setActivity({
             ...activity,
@@ -51,10 +53,11 @@ export default function PostExercise() {
     //seleccionar países
     function handleSelect(e) {
         const valor = e.target.value
-        const id = countries.find(e => {
-            if (e.name === valor) {
+        const id = countries.find(e=> {
+            if(e.name === valor){
                 return e.id
             }
+            
         })
         setActivity({
             ...activity,
@@ -65,15 +68,11 @@ export default function PostExercise() {
 
     //deleted
     function handleDelete (e){
-        
-        console.log(e)
+        console.log(e);
        // const id = e.target.innerText
-        const citi = activity.country
-       
-
         setActivity({
             ...activity,
-            country: citi.filter(el => el !== e)
+            country: activity.country.filter(el => el !== e)
         })
     }
     //clear
@@ -112,9 +111,7 @@ export default function PostExercise() {
             <form onSubmit={e => handleSubmit(e)}>
             <div className={estilos.formulario}>
                 <div>
-                    {errores && (
-                        <p>{errores.error}</p>
-                    )}
+                   
                     <label htmlFor="nombre">Nombre:</label>
                     <input
                         className={estilos.input}
@@ -129,7 +126,11 @@ export default function PostExercise() {
                         required
                         
                     />
-
+                   
+                    {errores && (
+                       <small className={estilos.error}>  {errores.error}</small>
+                    )}
+                    
                 </div>
                 <div>
                     <label htmlFor="duracion">Duración:</label>
@@ -140,6 +141,7 @@ export default function PostExercise() {
                         name="difficulty" 
                         onChange={handleBlur}
                     >
+                        <option defaultValue disabled="disabled">--Seleccionar--</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -164,7 +166,7 @@ export default function PostExercise() {
                 <div>
                     <label htmlFor="temporada">Temporada:</label>
                     <select className={estilos.select} id="temporada" onChange={handleSelectSeason} required>
-                        <option selected="selected" disabled>--Seleccionar--</option>
+                        <option  defaultValue disabled="disabled">--Seleccionar--</option>
                         <option value="Verano">Verano</option>
                         <option value="Otoño">Otoño</option>
                         <option value="Invierno">Invierno</option>
@@ -174,7 +176,7 @@ export default function PostExercise() {
                 <div>
                     <label htmlFor="seleccionar">Seleccionar País:</label>
                     <select className={estilos.select} id="seleccionar" onChange={handleSelect} required>
-                        <option selected="selected" disabled>--Seleccionar--</option>
+                      
                         {countries.map(e => (
                             <option key={e.name} value={e.name}>{e.name}</option>
                         ))}
@@ -192,10 +194,13 @@ export default function PostExercise() {
                 </div>
                 <button className="button" type="submit">Crear</button>
             </form>
+            <small>
             {errors && (
                 <p>Todos los campos son obligatorios</p>
             )
-            }
+            }             
+            </small>
+           
 
         </div>
     )

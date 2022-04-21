@@ -19,24 +19,17 @@ export default function Countries() {
     const indexOfLastCountrie = currentPage * countriesByPage;
     const indexOfFirstCountry = indexOfLastCountrie - countriesByPage;
     const currentCountries = allCountries.slice(indexOfFirstCountry, indexOfLastCountrie);
+
     const [activity, setActivity] = useState('')
     const [ordenado, setOrdenado] = useState('')
     const [errors, setErrors] = useState({});
-    const [errorserarch, setErrorsearch] = useState({});
     const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/;
-    
 
 
-   const paginas = (pageNumber)=>{
+
+    const paginas = (pageNumber) => {
         setCurrentPage(pageNumber)
-        if(pageNumber >= 2){
-            setCountriesByPage(10)
-            console.log('no')
-        }
-        else{
-            setCountriesByPage(9)
-            console.log('si')
-        }
+        pageNumber >= 2 ? setCountriesByPage(10) : setCountriesByPage(9)
     }
     useEffect(() => {
         dispatch(getCounttries());
@@ -44,12 +37,16 @@ export default function Countries() {
 
 
     
-
     //filtrar por continente
     function handleFilterByContinent(e) {
-        
+
         dispatch(getCountruByContienet(e.target.value))
         paginas(1)
+        setOrdenado('')
+
+    }
+    function handleReload() {
+        dispatch(getCounttries())
         setOrdenado('')
     }
     //buscar por actividad
@@ -86,133 +83,131 @@ export default function Countries() {
     //validad buscar actividad
     //manejo de errores del input
     function handleKeyUp(e) {
-        expresionesName.test(e.target.value)? setErrors({}):
-        setErrors({ error: "Colocar mas de dos caracteres y solo letras y espacios" })  
+        expresionesName.test(e.target.value) ? setErrors({}) :
+            setErrors({ error: "Colocar mas de dos caracteres y solo letras y espacios" })
     }
-   
-    function handleReset(e){
-        e.target.value === ''? setErrors({}):
-        setErrors({error: 'Este campo tiene uno o mas errores'})    
-     }
-   
+
+    function handleReset(e) {
+        e.target.value === '' ? setErrors({}) :
+            setErrors({ error: 'Este campo tiene uno o mas errores' })
+    }
+
 
     return (
         <>
 
             <section className={estilos.container}>
-                
-                <SearchBar
-                    errors={errorserarch}
-                    handleKeyUp={handleKeyUp} 
-                    handleReset={handleReset}
-                />
 
-               
+                <SearchBar />
                 <div>
 
-                   
+
                     <div className={estilos.contenedorTargetas}>
 
 
                         <div >
                             <div className={estilos.contenedorFiltros}>
-                                <div>
+                                
+                                <button onClick={handleReload} className="button">Resetar</button>
+                               
+                                    <div>
 
-                                    <label className={estilos.label} htmlFor="filtroContinente">Filtrar por contiente:</label>
-                                    <select className={estilos.select} onChange={e => handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
-                                        <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
-                                        <option className={estilos.option} value="Todos">Todos</option>
-                                        <option className={estilos.option} value="Americas">Americas</option>
-                                        <option className={estilos.option} value="Europe">Europe</option>
-                                        <option className={estilos.option} value="Asia">Asia</option>
-                                        <option className={estilos.option} value="Africa">Africa</option>
-                                        <option className={estilos.option} value="Oceania">Oceania</option>
-                                        <option className={estilos.option} value="Antarctic">Antarctica</option>
-                                    </select>
+                                        <label className={estilos.label} htmlFor="filtroContinente">Filtrar por contiente:</label>
+                                        <select className={estilos.select} onChange={e => handleFilterByContinent(e)} name="continent" id="filtroContinente" form="carform">
+                                            <option className={estilos.option} disabled="disabled" defaultValue >--Seleccionar--</option>
 
-                                </div>
-                                <div>
+                                            <option className={estilos.option} value="Americas">Americas</option>
+                                            <option className={estilos.option} value="Europe">Europe</option>
+                                            <option className={estilos.option} value="Asia">Asia</option>
+                                            <option className={estilos.option} value="Africa">Africa</option>
+                                            <option className={estilos.option} value="Oceania">Oceania</option>
+                                            <option className={estilos.option} value="Antarctic">Antarctica</option>
+                                        </select>
 
-                                    <label className={estilos.label} htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
-                                    <select className={estilos.select} id="cantidadPoblacion" onChange={e => handleOrderByPopulation(e)}>
-                                        <option className={estilos.option} disabled selected="selected" >--Seleccionar--</option>
-                                        <option className={estilos.option} value="Ascendentesc">Ascendente</option>
-                                        <option className={estilos.option} value="Descendete">Descendete</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className={estilos.label} htmlFor="ordenAlfabetico">Orden Alfaético:</label>
-                                    <select className={estilos.select} id="ordenAlfabetico" onChange={e => handleOrderCountries(e)} >
-                                        <option className={estilos.option} disabled selected="selected">--Seleccionar--</option>
-                                        <option className={estilos.option} value="AZ">A-Z</option>
-                                        <option className={estilos.option} value="ZA">Z-A</option>
-                                    </select>
-                                </div>
-                                <div className={estilos.relativo}>
-                                    <label className={estilos.label} htmlFor="actividad">Por Actividad:</label>
-                                    <form   onSubmit={handleSubmit}>
-                                        <input
-                                            className={estilos.formInput}
-                                            value={activity}
-                                            onChange={handleInputChange}
-                                            placeholder="Buscar actividad"
-                                            name="otro"
-                                            type="text"
-                                            onBlur={handleReset}
-                                            onKeyUp={handleKeyUp}
+                                    </div>
+                                    <div>
 
-                                        />
-                                        <button className="button" type="submit">Buscar</button>
-                                    </form>
-                                    <small className={estilos.error}>
-                                        {errors && (
-                                           <>{errors.error}</>
-                                        )}
-                                    </small>
+                                        <label className={estilos.label} htmlFor="cantidadPoblacion">Cantidad de Poblacion:</label>
+                                        <select className={estilos.select} id="cantidadPoblacion" onChange={e => handleOrderByPopulation(e)}>
+                                            <option className={estilos.option} disabled="disabled" defaultValue >--Seleccionar--</option>
+                                            <option className={estilos.option} value="Ascendente">Ascendente</option>
+                                            <option className={estilos.option} value="Descendete">Descendete</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className={estilos.label} htmlFor="ordenAlfabetico">Orden Alfaético:</label>
+                                        <select className={estilos.select} id="ordenAlfabetico" onChange={e => handleOrderCountries(e)} >
+                                            <option className={estilos.option}disabled="disabled"  defaultValue>--Seleccionar--</option>
+                                            <option className={estilos.option} value="AZ">A-Z</option>
+                                            <option className={estilos.option} value="ZA">Z-A</option>
+                                        </select>
+                                    </div>
+                                    <div className={estilos.relativo}>
+                                        <label className={estilos.label} htmlFor="actividad">Por Actividad:</label>
+                                        <form onSubmit={handleSubmit}>
+                                            <input
+                                                className={estilos.formInput}
+                                                value={activity}
+                                                onChange={handleInputChange}
+                                                placeholder="Buscar actividad"
+                                                name="otro"
+                                                type="text"
+                                                onBlur={handleReset}
+                                                onKeyUp={handleKeyUp}
 
-                                </div>
+                                            />
+                                            <button className="button" type="submit">Buscar</button>
+                                        </form>
+                                        <small className={estilos.error}>
+                                            {errors && (
+                                                <>{errors.error}</>
+                                            )}
+                                        </small>
 
+                                    </div>
+
+                              
 
                             </div>
                         </div>
                         <section className={estilos.section}>
-                        <h2>{ordenado}</h2>
+                            <h2>{ordenado}</h2>
+
                             <div className={estilos.contenedorTargeta}>
-                                
-                            {currentCountries?.map((e) => {
-                                return (
-                                    <div key={e.id} className="targeta">
 
-                                        <div >
+                                {currentCountries.length !== 0 ?
+                                    currentCountries?.map((e) => {
+                                        return (
+                                            <div key={e.name} className={estilos.targeta}>
+                                                {
+                                                    e.error ? <Errors />
+                                                        : <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /> </Link>
 
-                                            {
-                                                e.error ? <Errors />
-                                                    : <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /> </Link>
+                                                }
 
-                                            }
-                                        </div>
-                                    </div>
-                                )
-                            })}          
+                                            </div>
+                                        )
+                                    }) : <Loading />
+                                }
                             </div>
-                           
-                            
+
+
                             <div className={estilos.paginado}>
                                 <Paginas
-                                    
+
                                     countriesByPage={countriesByPage}
                                     allCountries={allCountries.length}
                                     paginas={paginas} />
                             </div>
-                            
+
                         </section>
                     </div>
 
                 </div>
 
 
-            </section> 
-        
+            </section>
+
         </>
     )
 }

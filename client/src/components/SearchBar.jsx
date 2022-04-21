@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch} from 'react-redux';
 import { getCountriesByName} from '../actions'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/searchbar.css'
 export default function SearchBar() {
     const dispatch = useDispatch()
