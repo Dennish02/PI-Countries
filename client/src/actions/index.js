@@ -24,7 +24,7 @@ export function getCountriesByName(value){
 }
 export function getActivities(value){
     return async function(dispatch){
-        var json= await axios ("http://localhost:3001/activities/"+ value)
+        var json= await axios ("http://localhost:3001/activity/"+ value)
         
         try {
             return dispatch({
