@@ -70,3 +70,14 @@ h1{
  @-moz-keyframes progress-bar {
     0% { width: 0; }
  }
+ .button{
+     width: 20%;
+     margin: 0 auto;
+     padding: 1rem;
+     background-color: #414141;
+     border-radius: 0.5rem;
+ }
+ .button:hover{
+     cursor: pointer;
+     background-color: #353535;
+ }

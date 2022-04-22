@@ -1,9 +1,10 @@
 const { Router } = require('express');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const axios = require('axios');
 
-const { Country, Exercise, Countryexercise } = require('../db')
+
+const { Country, Exercise } = require('../db')
+const {getApiInfo, getDbInfo} = require('../controladores')
 
 const router = Router();
 
@@ -11,39 +12,7 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 
 
-const getApiInfo = async () => {
-    const apiUrl = await axios.get('https://restcountries.com/v3/all');
-    const apiInfo = await apiUrl.data.map(s => {
 
-        return {
-            id: s.cca3,
-            name: s.translations.spa.common,
-            capital: s.capital && s.capital[0],
-            population: s.population,
-            flag: s.flags && s.flags[1],
-            area: s.area,
-            continent: s.continents && s.continents[0],
-            region: s.region,
-            subregion: s.subregion,
-        }
-
-
-    });
-
-    return apiInfo;
-}
-
-const getDbInfo = async () => {
-    return await Country.findAll({
-        include: {
-            model: Exercise,
-            attributes: ['name', 'difficulty', 'duration', 'season', 'id'],
-            through: {
-                attributes: [],
-            }
-        },
-    });
-}
 /*const getAllCountries = async ()=>{
     const apiInfo = await getApiInfo();
     const dbInfo = await getDbInfo();

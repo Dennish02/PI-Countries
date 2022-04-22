@@ -46,9 +46,7 @@
         max-height: 350px;
     }
 }
-.contenedorFiltros{
-  
-}
+
 @media(min-width:768px){
     .contenedorFiltros{
         display: grid;

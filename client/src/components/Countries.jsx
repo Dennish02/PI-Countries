@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getCounttries, getCountruByContienet, orderByName, getActivities, orderByPopulation } from "../actions";
 import { Link } from 'react-router-dom';
-
+import favicon from '../img/henry.png';
 import Country from "./Country";
 import Paginas from './Paginas';
 import SearchBar from "./SearchBar";
@@ -171,17 +171,17 @@ export default function Countries() {
                             </div>
                         </div>
                         <section className={estilos.section}>
-                            <h2>{ordenado}</h2>
+                               <h2>{ordenado}</h2>
 
-                            <div className={estilos.contenedorTargeta}>
+                            <div key={currentCountries.img} className={estilos.contenedorTargeta}>
 
                                 {currentCountries.length !== 0 ?
                                     currentCountries?.map((e) => {
                                         return (
-                                            <div key={e.name} className={estilos.targeta}>
+                                            <div key={e.id} className={estilos.targeta}>
                                                 {
-                                                    e.error ? <Errors />
-                                                        : <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /> </Link>
+                                                    e.error ?  <Errors />
+                                                        :  <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /></Link>
 
                                                 }
 
@@ -207,7 +207,9 @@ export default function Countries() {
 
 
             </section>
-
+         <footer> <p> Powered By Hesler Dennis. | Todos los derechos reservados <img src={favicon} alt="Logo Henry" width="20px"/> Henry |</p>  
+                   <p>Email: dennishesler02@gmail.com</p>             
+         </footer>                       
         </>
     )
 }

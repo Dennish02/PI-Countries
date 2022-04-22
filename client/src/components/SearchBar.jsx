@@ -3,7 +3,10 @@ import { useState } from "react";
 import { useDispatch} from 'react-redux';
 import { getCountriesByName} from '../actions'
 import { Link } from 'react-router-dom';
-import '../styles/searchbar.css'
+import estilos from  '../styles/SearchBar.module.css';
+
+
+
 export default function SearchBar() {
     const dispatch = useDispatch()
     const [name, setName] = useState('')
@@ -38,19 +41,19 @@ export default function SearchBar() {
 
    
     return (
-        <div className="container__search">
-            <nav className="nav">
+        <div className={estilos.container__search}>
+            <nav className={estilos.nav}>
                 <Link to='/countries'>
                 <h1 className="titulo">Países</h1>
                 </Link>  
 
                     
             </nav>
-            <Link className="link" to='/activity'>Crear actividad</Link>
-            <div className="searchBar">
-            <form className="form" onSubmit={handleSubmit}>
+            <Link className={estilos.link} to='/activity'>Crear actividad</Link>
+            <div className={estilos.searchBar}>
+            <form className={estilos.form} onSubmit={handleSubmit}>
                 <input 
-                    className="form__input"
+                    className={estilos.form__input}
                     onKeyUp={handleKeyUp} 
                     name="buscar" 
                     value={name}
@@ -61,7 +64,7 @@ export default function SearchBar() {
                 />
                 <button className="button" type="submit">Buscar</button>
             </form>
-            <small className="small">
+            <small className={estilos.small}>
             {errores && (
                         <p>{errores.error}</p>
                     )}

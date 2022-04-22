@@ -1,5 +1,7 @@
+*, *:before, *:after {
+    box-sizing: inherit;
+  }
 .contenedorTargeta{
-    position: absolute;
     display: block;
     margin: 0 auto;
 }
@@ -27,10 +29,6 @@
 } 
 @media(min-width: 768px){
     .targeta{
-        border: solid 1px rgba(82, 82, 82, 0.349);
-        border-radius: 10px;
-        width: 250px;
-        height: 200px;
         margin: 0;
     } 
 }

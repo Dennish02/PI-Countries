@@ -36,8 +36,7 @@ export default function PostExercise() {
     
     function handleBlur(e) {
         e.target.value === ''? setErrores({}):
-        setErrores({error: 'Este campo tiene uno o mas errores'})  
-        //añadir name y duration
+        setErrores({error: 'Este campo tiene uno o mas errores'})
         setActivity({
             ...activity,
             [e.target.name]: e.target.value,
