@@ -19,7 +19,7 @@ export default function Errors(){
 
 
     return(
-        <div>
+        <div >
             <button className="button" onClick={handleMount}>Volver a cargar</button>
             {errorTrue?.map((e) =>{
                 return(

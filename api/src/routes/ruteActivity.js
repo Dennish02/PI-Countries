@@ -3,7 +3,8 @@ const router = Router();
 
 const {
     getActivitieByName, 
-    postActivity} = require('../controladores')
+    postActivity,
+    deletedActivity} = require('../controladores')
     
 /* GET /countries/{idPais}:
     Obtener el detalle de un país en particular
@@ -16,6 +17,7 @@ const {
    Recibe los datos recolectados desde el formulario controlado de la ruta de creación de actividad turística por body
    Crea una actividad turística en la base de datos
 */
+    router.delete('/:idPais/:idActividad', deletedActivity)
 
     router.post('/', postActivity);
 

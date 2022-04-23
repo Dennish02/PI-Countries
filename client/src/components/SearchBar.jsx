@@ -10,7 +10,7 @@ import estilos from  '../styles/SearchBar.module.css';
 export default function SearchBar() {
     const dispatch = useDispatch()
     const [name, setName] = useState('')
-    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/;
+    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{0,40}$/;
     const [errores, setErrores] = useState({});
      //const {errors, handleKeyUp, handleReset} = useParams()
   
@@ -28,6 +28,7 @@ export default function SearchBar() {
     function handleSubmit(e) {
             e.preventDefault();
             if(name && name.length > 1 && errores !== {}){
+                setErrores({})
                 dispatch(getCountriesByName(name))
                 setName('')
                 

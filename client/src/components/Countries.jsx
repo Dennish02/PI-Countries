@@ -23,7 +23,7 @@ export default function Countries() {
     const [activity, setActivity] = useState('')
     const [ordenado, setOrdenado] = useState('')
     const [errors, setErrors] = useState({});
-    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{2,40}$/;
+    const expresionesName = /^[a-zA-ZÁ-ÿ\s]{0,40}$/;
 
 
 
@@ -173,15 +173,15 @@ export default function Countries() {
                         <section className={estilos.section}>
                                <h2>{ordenado}</h2>
 
-                            <div key={currentCountries.img} className={estilos.contenedorTargeta}>
+                            <div className={estilos.contenedorTargeta}>
 
                                 {currentCountries.length !== 0 ?
                                     currentCountries?.map((e) => {
                                         return (
-                                            <div key={e.id} className={estilos.targeta}>
+                                            <div key={e.id}>
                                                 {
-                                                    e.error ?  <Errors />
-                                                        :  <Link to={"/countries/" + e.id}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /></Link>
+                                                    e.error ? <div key={e.id}> <Errors /> </div>
+                                                        :  <Link to={"/countries/" + e.id}> <div key={e.id} className={estilos.targeta}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /> </div></Link>
 
                                                 }
 

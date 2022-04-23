@@ -67,9 +67,21 @@ export function getCounty(idPais){
     }
 }
 export function exportExercise(payload){
-    return async function(dispatch){
+    return async function(){
+        
         const json = await axios.post("http://localhost:3001/activity", payload)
-        console.log(json)
         return json;
+    }
+}
+export function deleteExcercise(payload){
+    const {idPais, idActivity} = payload
+    return async function(dispatch){
+        
+        const json = await axios.delete(`http://localhost:3001/activity/${idPais}/${idActivity}`)
+        
+        return dispatch({
+            type: 'DELETE_EXERCISE',
+            payload: json
+        })
     }
 }

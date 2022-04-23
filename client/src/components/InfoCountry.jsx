@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getCounty} from "../actions";
+import { getCounty, deleteExcercise} from "../actions";
 import { Link, useParams } from 'react-router-dom';
 import estilos from '../styles/InfoCountry.module.css';
 
@@ -9,12 +9,22 @@ export default function InfoCountry(){
     const {id} = useParams();
     const dispatch = useDispatch()
     const country = useSelector((state)=> state.country)
-   
-
+  
+    
     useEffect(()=>{
         dispatch(getCounty(id))
+        
     }, [dispatch, id])
   
+ 
+
+   
+    function handleDelete(e){
+      let isDelete =  window.confirm('Estas seguro?')
+      isDelete && dispatch(deleteExcercise({idPais:id, idActivity: e}))
+      
+    }
+
      return (
          <div className={estilos.contenedor}>
              <Link to='/countries'><button className="button" >Volver</button></Link>
@@ -40,14 +50,17 @@ export default function InfoCountry(){
                              <h4>Actividades registradas en este país</h4>
                              <div className={estilos.actividades}>
                                  {country.data.exercises.length > 0 ? country.data.exercises.map(e =>
-                                     <div className={estilos.actvidad} key={e.id}>
-                                         <p><span>Nombre:</span> {e.name}</p>
-                                         <p><span>Dificultad:</span> {e.difficulty}</p>
-                                         <p><span>Duración:</span> {e.duration}</p>
-                                         <p><span>Temporada:</span> {e.season}</p>
-                                     </div>
+                                   { return (
+                                        <div className={estilos.actvidad} key={e.id}>
+                                        <button  onClick={()=>handleDelete(e.id)} className={estilos.button}>❌</button>
+                                        <p><span>Nombre:</span> {e.name}</p>
+                                        <p><span>Dificultad:</span> {e.difficulty}</p>
+                                        <p><span>Duración:</span> {e.duration}</p>
+                                        <p><span>Temporada:</span> {e.season}</p>
+                                    </div>
+                                    ) 
 
-                                 ) : <p className={estilos.error} >Este país no tiene actividad </p>}
+                                 }) : <p className={estilos.error} >Este país no tiene actividad </p>}
                              </div>
 
                          </div>

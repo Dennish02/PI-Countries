@@ -23,7 +23,8 @@ function rootReducer (state= initialSatate, action){
             
         case 'GET_COUNTRY_BY_NAME':
             let countryName = action.payload
-            let noCountrie = [{error: 'Ningún país tiene ese nombre',
+            let noCountrie = [{id:2,
+                                error: 'Ningún país tiene ese nombre',
                                  img: img}]
             let hayOsi = countryName.length !== 0 ? action.payload : noCountrie
             return {
@@ -96,6 +97,11 @@ function rootReducer (state= initialSatate, action){
             return{
                 ...state,
             }
+        case 'DELETE_EXERCISE':
+                return{
+                    ...state,
+                    country: action.payload
+                }
         default:
             return state;
     }

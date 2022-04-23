@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const { Country, Exercise } = require('../db')
+const { Country, Exercise, Countryexercise } = require('../db')
 
 const getApiInfo = async () => {
     const apiUrl = await axios.get('https://restcountries.com/v3/all');
@@ -148,11 +148,29 @@ const postActivity = async (req, res) => {
        */
     res.send('atividad creada')
 }
+const deletedActivity = async ( req, res)=>{
+     const {idPais, idActividad } = req.params;
+     Number(idActividad)
+     try {
+        await Countryexercise.destroy({
+             where:{
+                countryId : idPais ,
+                exerciseId : idActividad
+             }
+         })
+         const country = await getDbInfo();
+         const sendCountry = country.find(e=>e.id === idPais)
+         res.send(sendCountry)
+     } catch (error) {
+         res.status(404).send(error)
+     }
+}
 module.exports ={
     getApiInfo , 
     getDbInfo, 
     getCountries,
     getCountriesById,
     getActivitieByName,
-    postActivity
+    postActivity,
+    deletedActivity
 }
