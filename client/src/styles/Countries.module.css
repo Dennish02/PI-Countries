@@ -3,6 +3,10 @@
     max-width: 1200px;
     margin: 0 auto;
 }
+.contGral{
+   
+    display: block;
+}
 .paginado{
     max-width: 1200px;
     margin: 1rem auto;

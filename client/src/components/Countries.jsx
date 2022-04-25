@@ -99,7 +99,7 @@ export default function Countries() {
             <section className={estilos.container}>
 
                 <SearchBar />
-                <div>
+                <div className={estilos.contGral}>
 
 
                     <div className={estilos.contenedorTargetas}>
@@ -202,14 +202,14 @@ export default function Countries() {
 
                         </section>
                     </div>
-
+                                 
                 </div>
 
 
             </section>
-         <footer> <p> Powered By Hesler Dennis. | Todos los derechos reservados <img src={favicon} alt="Logo Henry" width="20px"/> Henry |</p>  
+            <footer> <p> Powered By Hesler Dennis. | Todos los derechos reservados <img src={favicon} alt="Logo Henry" width="20px"/> Henry |</p>  
                    <p>Email: dennishesler02@gmail.com</p>             
-         </footer>                       
+                    </footer>                    
         </>
     )
 }
