@@ -16,7 +16,7 @@ body {
 .App {
   text-align: center;
   margin: 0;
-  
+  height: 100vh;
 
 }
 a{
