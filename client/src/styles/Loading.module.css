@@ -36,7 +36,6 @@
 
 .targetaContenido{
     background-color: rgba(233, 233, 233, 0.11);
-    backdrop-filter: blur(2rem);
     height: 100%;
     overflow: hidden;
     white-space: nowrap;
@@ -50,7 +49,9 @@
 
 
  @keyframes progress-bar {
-   0% { width: 0; }
-   100% {width: 100%;}
+   0% { opacity:  100;
+        width: 0; }
+   100% {opacity:  0;
+        width: 100%;}
  } 
  
