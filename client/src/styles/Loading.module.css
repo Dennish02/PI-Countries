@@ -17,7 +17,7 @@
 @media(min-width: 768px){
     .contenedorTargeta{
         grid-template-columns: repeat(3, 1fr);
-        
+        height: 90vh;
     }
 }
 .targeta{
