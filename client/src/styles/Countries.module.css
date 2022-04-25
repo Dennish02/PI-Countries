@@ -1,4 +1,6 @@
-
+*, *:before, *:after {
+    box-sizing: inherit;
+  }
 .container{
     max-width: 1200px;
     margin: 0 auto;
@@ -111,4 +113,13 @@
     left: 0;
     padding: 1rem;
     border-radius: 0.5rem;
+}
+.errores{
+    display: block;
+}
+.footer{
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }

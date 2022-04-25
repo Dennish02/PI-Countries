@@ -180,7 +180,7 @@ export default function Countries() {
                                         return (
                                             <div key={e.id}>
                                                 {
-                                                    e.error ? <div key={e.id}> <Errors /> </div>
+                                                    e.error ? <div className={estilos.errores} key={e.id}> <Errors /> </div>
                                                         :  <Link to={"/countries/" + e.id}> <div key={e.id} className={estilos.targeta}> <Country id={e.id} name={e.name} flag={e.flag} continent={e.region} /> </div></Link>
 
                                                 }
@@ -207,7 +207,7 @@ export default function Countries() {
 
 
             </section>
-            <footer> <p> Powered By Hesler Dennis. | Todos los derechos reservados <img src={favicon} alt="Logo Henry" width="20px"/> Henry |</p>  
+            <footer className={estilos.footer}> <p> Powered By Hesler Dennis. | Todos los derechos reservados <img src={favicon} alt="Logo Henry" width="20px"/> Henry |</p>  
                    <p>Email: dennishesler02@gmail.com</p>             
                     </footer>                    
         </>
