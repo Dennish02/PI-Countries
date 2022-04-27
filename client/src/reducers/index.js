@@ -4,7 +4,6 @@ const initialSatate = {
     allCountries: [],
     paracontinente:[],
     country:[],
-    order: [],
     error:[]
 }
 
@@ -22,18 +21,22 @@ function rootReducer (state= initialSatate, action){
             }
             
         case 'GET_COUNTRY_BY_NAME':
-            let countryName = action.payload
+            let countryName = action.payload;
+            
             let noCountrie = [{id:2,
                                 error: 'Ningún país tiene ese nombre',
                                  img: img}]
             let hayOsi = countryName.length !== 0 ? action.payload : noCountrie
+            
             return {
                 ...state,
                 countries: hayOsi
+               
             }
 
         case 'GET_CONTRIES_BY_CONTINENT':
             //let LoCountries = state.allCountries
+           
             const statusFilter =  state.allCountries.filter(e => e.region === action.payload)             
             return{
                 ...state,
@@ -42,7 +45,7 @@ function rootReducer (state= initialSatate, action){
 
         case 'ORDER_COUNTRIES_AZ_BY_NAME':
             //let todos = state.allCountries
-              
+           
             let statusOrder  = action.payload === 'AZ'? state.countries.sort(((a, b) => {
                                 if(a.name > b.name) {
                                     return 1;
@@ -68,6 +71,7 @@ function rootReducer (state= initialSatate, action){
 
             case 'ORDER_COUNTRIES_BY_POPULATION':
                 let countriesTotal = state.countries;
+                
                 let populationOrder = action.payload === 'Ascendente'? countriesTotal.sort(((a,b) => a.population - b.population)):
                 countriesTotal.sort(((a, b) => b.population - a.population))
 
@@ -86,7 +90,7 @@ function rootReducer (state= initialSatate, action){
         case 'FILTER_BY_ACTIVITY':
             let countryFilter = action.payload
             let mensajeError = [{id:1,
-                                 error: 'Ningún país tiene esa actividad, ¿Desea Crearla?',
+                                 error: 'Ningún país tiene esa actividad',
                                  img: img}]
             let hayOno = countryFilter.length !== 0 ? action.payload : mensajeError
             return {
@@ -98,10 +102,11 @@ function rootReducer (state= initialSatate, action){
                 ...state,
             }
         case 'DELETE_EXERCISE':
-                return{
-                    ...state,
-                    country: action.payload
-                }
+            return {
+                ...state,
+                country: action.payload
+            }
+       
         default:
             return state;
     }

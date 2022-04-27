@@ -58,6 +58,8 @@ export function orderByPopulation(payload){
     }
 }
 export function getCounty(idPais){
+ 
+
     return async function (dispatch){
         let json = await axios(`/countries/${idPais}`)
         return dispatch({

@@ -57,11 +57,14 @@ export default function PostExercise() {
             }
             
         })
-        setActivity({
-            ...activity,
-            country: [...activity.country, id.id]
-        })
-
+        if(activity.country.includes(id.id)){
+            alert('ya seleccionaste este País')
+        }else{
+            setActivity({
+                ...activity,
+                country: [...activity.country, id.id]
+            })
+        }
     }
 
     //deleted
@@ -131,7 +134,7 @@ export default function PostExercise() {
                     
                 </div>
                 <div>
-                    <label htmlFor="duracion">Duración:</label>
+                    <label htmlFor="duracion">Dificultad:</label>
                     <select
                         className={estilos.select} 
                         id="duracion" 

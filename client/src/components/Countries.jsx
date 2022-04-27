@@ -19,18 +19,26 @@ export default function Countries() {
     const indexOfLastCountrie = currentPage * countriesByPage;
     const indexOfFirstCountry = indexOfLastCountrie - countriesByPage;
     const currentCountries = allCountries.slice(indexOfFirstCountry, indexOfLastCountrie);
-
+  
     const [activity, setActivity] = useState('')
     const [ordenado, setOrdenado] = useState('')
     const [errors, setErrors] = useState({});
     const expresionesName = /^[a-zA-ZÁ-ÿ\s]{0,40}$/;
-
+   
 
 
     const paginas = (pageNumber) => {
+        //console.log(pageNumber);
         setCurrentPage(pageNumber)
+        //setNumber(pageNumber)
         pageNumber >= 2 ? setCountriesByPage(10) : setCountriesByPage(9)
     }
+    const goToNextPage = () => setCurrentPage(currentPage + 1);
+    const goToPreviousPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1)
+    }
+
+
     useEffect(() => {
         dispatch(getCounttries());
     }, [dispatch])
@@ -43,10 +51,11 @@ export default function Countries() {
         dispatch(getCountruByContienet(e.target.value))
         paginas(1)
         setOrdenado('')
-
+       
     }
     function handleReload() {
         dispatch(getCounttries())
+       
         setOrdenado('')
     }
     //buscar por actividad
@@ -193,11 +202,16 @@ export default function Countries() {
 
 
                             <div className={estilos.paginado}>
+                           
                                 <Paginas
-
+                                    currentPage={currentPage}
                                     countriesByPage={countriesByPage}
                                     allCountries={allCountries.length}
-                                    paginas={paginas} />
+                                    paginas={paginas} 
+                                    goToNextPage={goToNextPage}
+                                    goToPreviousPage={goToPreviousPage}
+                                    />
+                                    
                             </div>
 
                         </section>
@@ -207,6 +221,7 @@ export default function Countries() {
 
 
             </section>
+            <hr/>
             <footer className={estilos.footer}> <p> Powered By Hesler Dennis. | Todos los derechos reservados <img src={favicon} alt="Logo Henry" width="20px"/> Henry |</p>  
                    <p>Email: dennishesler02@gmail.com</p>             
                     </footer>                    

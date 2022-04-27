@@ -47,11 +47,20 @@
     animation-timing-function: ease-in-out;
 }
 
+@keyframes progress-bar {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
 
- @keyframes progress-bar {
-   0% { opacity:  100;
-        width: 0; }
-   100% {opacity:  0;
-        width: 100%;}
- } 
+    10% {
+        opacity: 85%;
+        width: 10%;
+    }
+
+    100% {
+        opacity: 0;
+        width: 100%;
+    }
+}
  
