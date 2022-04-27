@@ -22,15 +22,7 @@ export default function Loading(){
             <div  className={estilos.targeta}>
                 <div  className={estilos.targetaContenido}></div>
             </div>
-            <div  className={estilos.targeta}>
-                <div  className={estilos.targetaContenido}></div>
-            </div>
-            <div  className={estilos.targeta}>
-                <div  className={estilos.targetaContenido}></div>
-            </div>
-            <div  className={estilos.targeta}>
-                <div  className={estilos.targetaContenido}></div>
-            </div>
+           
         </div>
     )
 }
